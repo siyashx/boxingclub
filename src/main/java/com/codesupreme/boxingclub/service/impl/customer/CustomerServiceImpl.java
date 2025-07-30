@@ -66,8 +66,12 @@ public class CustomerServiceImpl implements CustomerServiceInter {
                 customer.setPhoneNumber(customerDto.getPhoneNumber());
             }
 
-            if (customerDto.getQrCode() != null) {
-                customer.setQrCode(customerDto.getQrCode());
+            if (customerDto.getProfilePicture() != null) {
+                customer.setProfilePicture(customerDto.getProfilePicture());
+            }
+
+            if (customerDto.getQrCodeImage() != null) {
+                customer.setQrCodeImage(customerDto.getQrCodeImage());
             }
 
             if (customerDto.getSiteUrl() != null) {

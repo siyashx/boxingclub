@@ -24,8 +24,9 @@ public class Customer {
     private String name;
     private String surname;
     private String phoneNumber;
+    private String profilePicture;
     private String password;
-    private String qrCode;
+    private String qrCodeImage;
     private String siteUrl;
     @JsonProperty("isDisable")
     private Boolean isDisable;
