@@ -52,11 +52,11 @@ public class NotificationImpl {
             }
 
             if (notificationDto.getMessage() != null) {
-                notificationDto.setMessage(notificationDto.getMessage());
+                notification.setMessage(notificationDto.getMessage());
             }
 
             if (notificationDto.getCreatedAt() != null) {
-                notificationDto.setCreatedAt(notificationDto.getCreatedAt());
+                notification.setCreatedAt(notificationDto.getCreatedAt());
             }
 
             notification = notificationRepository.save(notification);

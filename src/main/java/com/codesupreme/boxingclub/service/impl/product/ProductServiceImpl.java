@@ -48,19 +48,19 @@ public class ProductServiceImpl {
             Product product = optional.get();
 
             if (productDto.getTitle() != null) {
-                productDto.setTitle(productDto.getTitle());
+                product.setTitle(productDto.getTitle());
             }
 
             if (productDto.getPrice() != null) {
-                productDto.setPrice(productDto.getPrice());
+                product.setPrice(productDto.getPrice());
             }
 
             if (productDto.getImageUrl() != null) {
-                productDto.setImageUrl(productDto.getImageUrl());
+                product.setImageUrl(productDto.getImageUrl());
             }
 
             if (productDto.getIsDisable() != null) {
-                productDto.setIsDisable(productDto.getIsDisable());
+                product.setIsDisable(productDto.getIsDisable());
             }
 
             product = productRepository.save(product);
