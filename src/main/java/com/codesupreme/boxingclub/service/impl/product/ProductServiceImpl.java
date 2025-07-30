@@ -21,7 +21,7 @@ public class ProductServiceImpl {
     }
 
     //ALL
-    public List<ProductDto> getAllOrder() {
+    public List<ProductDto> getAllProduct() {
         List<Product> list = productRepository.findAll();
         return list.stream()
                 .map(det -> modelMapper.map(det, ProductDto.class))
@@ -29,21 +29,21 @@ public class ProductServiceImpl {
     }
 
     //ById
-    public ProductDto getOrderById(Long id) {
+    public ProductDto getProductById(Long id) {
         Optional<Product> optional = productRepository.findById(id);
         return optional.map(det -> modelMapper.map(det, ProductDto.class)).orElse(null);
     }
 
     //Create
-    public ProductDto createOrder(ProductDto dto) {
+    public ProductDto createProduct(ProductDto dto) {
         Product det = modelMapper.map(dto, Product.class);
         det = productRepository.save(det);
         return modelMapper.map(det, ProductDto.class);
     }
 
     //Update
-    public ProductDto updateOrder(Long orderId, ProductDto productDto) {
-        Optional<Product> optional = productRepository.findById(orderId);
+    public ProductDto updateProduct(Long productId, ProductDto productDto) {
+        Optional<Product> optional = productRepository.findById(productId);
         if (optional.isPresent()) {
             Product product = optional.get();
 
@@ -71,7 +71,7 @@ public class ProductServiceImpl {
     }
 
     //Delete
-    public Boolean deleteOrder(Long id) {
+    public Boolean deleteProduct(Long id) {
         Optional<Product> optional = productRepository.findById(id);
         if (optional.isPresent()) {
             Product det = optional.get();

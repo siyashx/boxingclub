@@ -16,14 +16,14 @@ public class ProductController {
     public ProductController(ProductServiceImpl service) {this.service = service;}
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllOrder() {
-        List<ProductDto> all = service.getAllOrder();
+    public ResponseEntity<List<ProductDto>> getAllProduct() {
+        List<ProductDto> all = service.getAllProduct();
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping("/{orderId}")
-    public ResponseEntity<ProductDto> getOrderById(@PathVariable("orderId") Long id) {
-        ProductDto det = service.getOrderById(id);
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("productId") Long id) {
+        ProductDto det = service.getProductById(id);
         if (det != null) {
             return ResponseEntity.ok(det);
         }
@@ -31,29 +31,29 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> createOrder(@RequestBody ProductDto dto) {
-        ProductDto created = service.createOrder(dto);
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto dto) {
+        ProductDto created = service.createProduct(dto);
         return ResponseEntity.ok(created);
     }
 
     // Update
-    @PutMapping("/{orderId}")
-    public ResponseEntity<?> updateOrder(
-            @PathVariable("orderId") Long id,
+    @PutMapping("/{productId}")
+    public ResponseEntity<?> updateProduct(
+            @PathVariable("productId") Long id,
             @RequestBody ProductDto productDto) {
-        ProductDto updatedOrder = service.updateOrder(id, productDto);
-        if (updatedOrder != null) {
-            return ResponseEntity.ok(updatedOrder);
+        ProductDto updatedProduct = service.updateProduct(id, productDto);
+        if (updatedProduct != null) {
+            return ResponseEntity.ok(updatedProduct);
         }
         return ResponseEntity.notFound().build();
     }
 
 
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable("orderId") Long id) {
-        Boolean deleted = service.deleteOrder(id);
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable("productId") Long id) {
+        Boolean deleted = service.deleteProduct(id);
         if (deleted) {
-            return ResponseEntity.ok("Admin order deleted successfully");
+            return ResponseEntity.ok("Admin product deleted successfully");
         }
         return ResponseEntity.notFound().build();
     }

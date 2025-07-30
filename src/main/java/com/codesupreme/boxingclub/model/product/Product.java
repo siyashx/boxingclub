@@ -11,7 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "`order`")
+@Table(name = "`product`")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
