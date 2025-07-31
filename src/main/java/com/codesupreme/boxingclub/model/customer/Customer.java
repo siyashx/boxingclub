@@ -28,6 +28,7 @@ public class Customer {
     private String password;
     private String qrCodeImage;
     private String siteUrl;
+    private String expiryMonthlySub;
     @JsonProperty("isDisable")
     private Boolean isDisable;
     private Date createdAt;

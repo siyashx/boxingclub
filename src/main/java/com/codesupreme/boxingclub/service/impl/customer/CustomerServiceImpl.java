@@ -78,6 +78,10 @@ public class CustomerServiceImpl implements CustomerServiceInter {
                 customer.setSiteUrl(customerDto.getSiteUrl());
             }
 
+            if (customerDto.getExpiryMonthlySub() != null) {
+                customer.setExpiryMonthlySub(customerDto.getExpiryMonthlySub());
+            }
+
             if (customerDto.getPassword() != null) {
                 customer.setPassword(customerDto.getPassword());
             }
