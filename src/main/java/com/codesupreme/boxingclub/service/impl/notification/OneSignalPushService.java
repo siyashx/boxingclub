@@ -17,6 +17,8 @@ import java.util.UUID;
 @Service
 public class OneSignalPushService {
 
+    private static final String EXTERNAL_ID_PREFIX = "boxing_customer_";
+
     private static final URI PUSH_URI =
             URI.create("https://api.onesignal.com/notifications?c=push");
 
@@ -53,6 +55,8 @@ public class OneSignalPushService {
         }
 
         try {
+            String externalId = EXTERNAL_ID_PREFIX + customerId.trim();
+
             String idempotencyKey = UUID.nameUUIDFromBytes(
                     eventKey.getBytes(StandardCharsets.UTF_8)
             ).toString();
@@ -63,7 +67,7 @@ public class OneSignalPushService {
                     "contents", Map.of("en", message),
                     "include_aliases", Map.of(
                             "external_id",
-                            List.of(customerId)
+                            List.of(externalId)
                     ),
                     "target_channel", "push",
                     "idempotency_key", idempotencyKey,
