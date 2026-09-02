@@ -21,6 +21,14 @@ public class Notification {
     private Long id;
 
     private String customerId;
+    private String title;
+
+    @Column(length = 1000)
     private String message;
+
+    @Column(length = 160)
+    private String eventKey;
+
+    private Boolean pushSent;
     private Date createdAt;
 }

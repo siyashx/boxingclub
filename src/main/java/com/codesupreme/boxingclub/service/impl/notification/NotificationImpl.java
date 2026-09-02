@@ -20,28 +20,36 @@ public class NotificationImpl {
         this.modelMapper = modelMapper;
     }
 
-    //ALL
+    // Admin/API compatibility: returns every notification.
     public List<NotificationDto> getAllNotification() {
-        List<Notification> list = notificationRepository.findAll();
-        return list.stream()
+        return notificationRepository.findAll().stream()
                 .map(det -> modelMapper.map(det, NotificationDto.class))
                 .toList();
     }
 
-    //ById
+    public List<NotificationDto> getPublicNotifications() {
+        return notificationRepository.findPublicNotifications().stream()
+                .map(det -> modelMapper.map(det, NotificationDto.class))
+                .toList();
+    }
+
+    public List<NotificationDto> getNotificationsForCustomer(String customerId) {
+        return notificationRepository.findNotificationsForCustomer(customerId).stream()
+                .map(det -> modelMapper.map(det, NotificationDto.class))
+                .toList();
+    }
+
     public NotificationDto getNotificationById(Long id) {
         Optional<Notification> optional = notificationRepository.findById(id);
         return optional.map(det -> modelMapper.map(det, NotificationDto.class)).orElse(null);
     }
 
-    //Save
     public NotificationDto saveNotification(NotificationDto dto) {
         Notification det = modelMapper.map(dto, Notification.class);
         det = notificationRepository.save(det);
         return modelMapper.map(det, NotificationDto.class);
     }
 
-    //Update
     public NotificationDto updateNotification(Long notificationId, NotificationDto notificationDto) {
         Optional<Notification> optional = notificationRepository.findById(notificationId);
         if (optional.isPresent()) {
@@ -50,34 +58,28 @@ public class NotificationImpl {
             if (notificationDto.getCustomerId() != null) {
                 notification.setCustomerId(notificationDto.getCustomerId());
             }
-
+            if (notificationDto.getTitle() != null) {
+                notification.setTitle(notificationDto.getTitle());
+            }
             if (notificationDto.getMessage() != null) {
                 notification.setMessage(notificationDto.getMessage());
             }
-
             if (notificationDto.getCreatedAt() != null) {
                 notification.setCreatedAt(notificationDto.getCreatedAt());
             }
 
             notification = notificationRepository.save(notification);
-
             return modelMapper.map(notification, NotificationDto.class);
         }
         return null;
     }
 
-    //Delete
     public Boolean deleteNotification(Long id) {
         Optional<Notification> optional = notificationRepository.findById(id);
         if (optional.isPresent()) {
-            Notification det = optional.get();
-            notificationRepository.delete(det);
+            notificationRepository.delete(optional.get());
             return true;
         }
         return false;
     }
-
-
 }
-
-

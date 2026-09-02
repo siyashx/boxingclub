@@ -14,9 +14,8 @@ import java.util.Date;
 public class NotificationDto {
 
     private Long id;
-
     private String customerId;
+    private String title;
     private String message;
     private Date createdAt;
-
 }
