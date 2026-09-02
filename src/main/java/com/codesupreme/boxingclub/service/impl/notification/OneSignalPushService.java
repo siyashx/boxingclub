@@ -18,6 +18,7 @@ import java.util.UUID;
 public class OneSignalPushService {
 
     private static final String EXTERNAL_ID_PREFIX = "boxing_customer_";
+    private static final String ANDROID_CHANNEL_ID = "86f12a0c-abe6-40e4-80ed-90d078d0a27e";
 
     private static final URI PUSH_URI =
             URI.create("https://api.onesignal.com/notifications?c=push");
@@ -70,6 +71,7 @@ public class OneSignalPushService {
                             List.of(externalId)
                     ),
                     "target_channel", "push",
+                    "android_channel_id", ANDROID_CHANNEL_ID,
                     "idempotency_key", idempotencyKey,
                     "custom_data", Map.of(
                             "type", "membership_expiry",
