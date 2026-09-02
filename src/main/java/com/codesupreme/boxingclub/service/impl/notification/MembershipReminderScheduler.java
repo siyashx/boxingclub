@@ -45,8 +45,7 @@ public class MembershipReminderScheduler {
     }
 
     @Scheduled(
-            //cron = "${membership.reminder.cron:0 0 10 * * *}",
-            cron = "${membership.reminder.cron:0 * * * * *}",
+            cron = "${membership.reminder.cron:0 0 10 * * *}",
             zone = "${membership.reminder.zone:Asia/Baku}"
     )
     public void sendDailyMembershipReminders() {
