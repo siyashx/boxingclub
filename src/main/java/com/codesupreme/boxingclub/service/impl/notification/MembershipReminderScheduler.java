@@ -1,6 +1,7 @@
 package com.codesupreme.boxingclub.service.impl.notification;
 
 import com.codesupreme.boxingclub.dao.customer.CustomerRepository;
+import com.codesupreme.boxingclub.push.FcmPushService;
 import com.codesupreme.boxingclub.dao.notification.NotificationRepository;
 import com.codesupreme.boxingclub.model.customer.Customer;
 import com.codesupreme.boxingclub.model.notification.Notification;
@@ -32,16 +33,16 @@ public class MembershipReminderScheduler {
 
     private final CustomerRepository customerRepository;
     private final NotificationRepository notificationRepository;
-    private final OneSignalPushService oneSignalPushService;
+    private final FcmPushService fcmPushService;
 
     public MembershipReminderScheduler(
             CustomerRepository customerRepository,
             NotificationRepository notificationRepository,
-            OneSignalPushService oneSignalPushService
+            FcmPushService fcmPushService
     ) {
         this.customerRepository = customerRepository;
         this.notificationRepository = notificationRepository;
-        this.oneSignalPushService = oneSignalPushService;
+        this.fcmPushService = fcmPushService;
     }
 
     @Scheduled(
@@ -100,7 +101,7 @@ public class MembershipReminderScheduler {
             return;
         }
 
-        boolean sent = oneSignalPushService.sendToCustomer(
+        boolean sent = fcmPushService.sendToCustomer(
                 customerId,
                 notification.getTitle(),
                 notification.getMessage(),

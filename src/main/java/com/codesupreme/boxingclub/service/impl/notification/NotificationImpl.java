@@ -4,6 +4,7 @@ import com.codesupreme.boxingclub.dao.notification.NotificationRepository;
 import com.codesupreme.boxingclub.dto.notification.NotificationDto;
 import com.codesupreme.boxingclub.model.notification.Notification;
 import org.modelmapper.ModelMapper;
+import com.codesupreme.boxingclub.push.FcmPushService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +15,12 @@ public class NotificationImpl {
 
     private final NotificationRepository notificationRepository;
     private final ModelMapper modelMapper;
+    private final FcmPushService push;
 
-    public NotificationImpl(NotificationRepository notificationRepository, ModelMapper modelMapper) {
+    public NotificationImpl(NotificationRepository notificationRepository, ModelMapper modelMapper, FcmPushService push) {
         this.notificationRepository = notificationRepository;
         this.modelMapper = modelMapper;
+        this.push = push;
     }
 
     // Admin/API compatibility: returns every notification.
@@ -47,6 +50,14 @@ public class NotificationImpl {
     public NotificationDto saveNotification(NotificationDto dto) {
         Notification det = modelMapper.map(dto, Notification.class);
         det = notificationRepository.save(det);
+        String target=det.getCustomerId();
+        try {
+            Long customerId=target==null || target.isBlank() || "all".equalsIgnoreCase(target.trim()) ? null : Long.valueOf(target);
+            int queued=push.enqueue(customerId,det.getTitle(),det.getMessage(),"notification:"+det.getId());
+            if(queued>0) {det.setPushSent(true);notificationRepository.save(det);}
+        } catch(Exception ignored) {
+            // Saving the in-app notification must not depend on provider availability.
+        }
         return modelMapper.map(det, NotificationDto.class);
     }
 
